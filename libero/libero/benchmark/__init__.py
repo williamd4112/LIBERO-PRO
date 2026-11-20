@@ -60,6 +60,7 @@ libero_suites = [
     "libero_goal",
     "libero_90",
     "libero_10",
+    "libero_microwave",
     "libero_mine",
     "libero_object_with_trigger", 
     "libero_object_triggered_episode", 
@@ -138,17 +139,22 @@ libero_suites = [
 "libero_object_task",
 "libero_object_env",
 ]
+suite_folder_map = {
+    "libero_microwave": "libero_90",
+}
+
 task_maps = {}
 max_len = 0
 for libero_suite in libero_suites:
     task_maps[libero_suite] = {}
+    folder = suite_folder_map.get(libero_suite, libero_suite)
     for task in libero_task_map[libero_suite]:
         language = grab_language_from_filename(task + ".bddl")
         task_maps[libero_suite][task] = Task(
             name=task,
             language=language,
             problem="Libero",
-            problem_folder=libero_suite,
+            problem_folder=folder,
             bddl_file=f"{task}.bddl",
             init_states_file=f"{task}.pruned_init",
         )
@@ -270,7 +276,7 @@ class Benchmark(abc.ABC):
             self.tasks[i].problem_folder,
             self.tasks[i].init_states_file,
         )
-        init_states = torch.load(init_states_path)
+        init_states = torch.load(init_states_path, weights_only=False)
         return init_states
 
     def set_task_embs(self, task_embs):
@@ -317,6 +323,14 @@ class LIBERO_10(Benchmark):
     def __init__(self, task_order_index=0):
         super().__init__(task_order_index=task_order_index)
         self.name = "libero_10"
+        self._make_benchmark()
+
+
+@register_benchmark
+class LIBERO_MICROWAVE(Benchmark):
+    def __init__(self, task_order_index=0):
+        super().__init__(task_order_index=task_order_index)
+        self.name = "libero_microwave"
         self._make_benchmark()
 
 

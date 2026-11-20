@@ -59,6 +59,9 @@ libero_task_map = {
         "FLOOR_SCENE9_pick_the_salad_dressing_and_place_it_in_the_basket",
         "FLOOR_SCENE10_pick_the_tomato_sauce_and_place_it_in_the_basket"
     ],
+    "libero_microwave": [
+        "KITCHEN_SCENE6_close_the_microwave",
+    ],
     "libero_mine": [
         "FLOOR_SCENE1_pick_the_alphabet_soup_and_place_it_in_the_basket",
         "KITCHEN_SCENE1_put_the_alphabet_soup_on_the_wooden_cabinet",        
